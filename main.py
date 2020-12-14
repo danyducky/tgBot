@@ -1,10 +1,7 @@
+from telegram import Bot
+from telegram.ext import Updater
+from config import bot_token
 
-def main(*args):
-    print(sum(args))
-
-def status(par):
-    print(type(par))
-
-
-if __name__ == '__main__':
-    main(*[5, 10, 51, 125])
+def main():
+    bot = Bot(bot_token)
+    updater = Updater(bot = bot)

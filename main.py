@@ -5,3 +5,7 @@ from config import bot_token
 def main():
     bot = Bot(bot_token)
     updater = Updater(bot = bot)
+
+
+def test():
+    print("asd")

@@ -1,11 +1,30 @@
-from telegram import Bot
-from telegram.ext import Updater
-from config import bot_token
+from aiogram import Bot, types
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
+import config
+import asyncio
 
-def main():
-    bot = Bot(bot_token)
-    updater = Updater(bot = bot)
+#loop = asyncio.get_event_loop()
+bot = Bot(token = config.bot_token)
+dp = Dispatcher(bot)
 
 
-def test():
-    print("asd")
+@dp.message_handler(commands=['start'])
+async def process_start_command(message: types.Message):
+    await asyncio.sleep(0.5)
+    await message.reply(f'Привет, {message.from_user.first_name}')
+
+  
+@dp.message_handler(commands=['help'])
+async def process_start_command(message: types.Message):
+    await message.reply(f'Привет')
+
+
+@dp.message_handler(content_types = types.ContentTypes.TEXT)
+async def answer(message: types.Message):
+    if message.text in config.messages:
+        await message.answer(f'Привет!')
+
+
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates = True)

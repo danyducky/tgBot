@@ -4,12 +4,14 @@ from aiogram.utils import executor
 import config
 import asyncio
 
+#loop = asyncio.get_event_loop()
 bot = Bot(token = config.bot_token)
 dp = Dispatcher(bot)
 
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
+    await asyncio.sleep(0.5)
     await message.reply(f'Привет, {message.from_user.first_name}')
 
   

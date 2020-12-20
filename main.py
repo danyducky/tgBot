@@ -4,18 +4,15 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
-import config
+from app import config
 
-loop = asyncio.get_event_loop()
+# loop = asyncio.get_event_loop()
 bot = Bot(token=config.bot_token)
 dp = Dispatcher(bot)
 
 
-# HELLO WORLD
-
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    await asyncio.sleep(0.5)
     await asyncio.sleep(0.5)
     await message.reply(f'Привет, {message.from_user.first_name}')
 
@@ -28,8 +25,8 @@ async def process_start_command(message: types.Message):
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
 async def answer(message: types.Message):
     # [config.messages] содержит множество слов приветствия
-    #if message.text in config.messages:
-        print('asd')
+    if message.text in config.messages:
+        await message.answer(f'Привет!')
 
 
 if __name__ == '__main__':

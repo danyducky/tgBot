@@ -1,33 +1,8 @@
-import asyncio
-
-from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
-
-from app import config
-
-# loop = asyncio.get_event_loop()
-bot = Bot(token=config.bot_token)
-dp = Dispatcher(bot)
-
-
-@dp.message_handler(commands=['start'])
-async def process_start_command(message: types.Message):
-    await asyncio.sleep(0.5)
-    await message.reply(f'Привет, {message.from_user.first_name}')
-
-
-@dp.message_handler(commands=['help'])
-async def process_start_command(message: types.Message):
-    await message.reply(f'Привет')
-
-
-@dp.message_handler(content_types=types.ContentTypes.TEXT)
-async def answer(message: types.Message):
-    # [config.messages] содержит множество слов приветствия
-    if message.text in config.messages:
-        await message.answer(f'Привет!')
+from bot import bot, storage
 
 
 if __name__ == '__main__':
+    from aiogram import executor
+    from handlers import dp
+
     executor.start_polling(dp, skip_updates = True)
